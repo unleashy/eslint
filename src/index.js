@@ -1,6 +1,7 @@
 import globals from "globals";
 import js from "@eslint/js";
 import ts from "typescript-eslint";
+import svelte from "eslint-plugin-svelte";
 import unicorn from "eslint-plugin-unicorn";
 import prettier from "eslint-config-prettier";
 
@@ -9,18 +10,21 @@ export default (tsconfigRootDir) => ts.config(
   ...ts.configs.recommendedTypeChecked,
   ...ts.configs.strictTypeChecked,
   unicorn.configs["flat/recommended"],
+  ...svelte.configs["flat/recommended"],
   prettier,
+  ...svelte.configs["flat/prettier"],
   {
     languageOptions: {
       sourceType: "module",
       ecmaVersion: "latest",
       globals: {
-        ...globals.es2024,
-        ...globals.nodeBuiltin,
+        ...globals.browser,
+        ...globals.node,
       },
       parserOptions: {
-        project: true,
+        projectService: true,
         tsconfigRootDir,
+        extraFileExtensions: [".svelte"],
       },
     },
   },
@@ -67,10 +71,23 @@ export default (tsconfigRootDir) => ts.config(
     },
   },
   {
+    files: ["**/*.svelte"],
+    languageOptions: {
+      parserOptions: {
+        parser: ts.parser,
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "no-undef": "off",
+    },
+  },
+  {
     files: ["**/*.js", "**/*.cjs", "**/*.mjs"],
     ...ts.configs.disableTypeChecked,
   },
   {
-    ignores: ["node_modules/", "dist/"],
+    ignores: ["build/", ".svelte-kit/", "dist/", ".yarn/", "node_modules/"],
   },
 );
