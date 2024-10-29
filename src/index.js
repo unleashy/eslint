@@ -81,6 +81,7 @@ export default (tsconfigRootDir) => ts.config(
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-unsafe-call": "off",
       "no-undef": "off",
+      "unicorn/filename-case": ["error", { "case": "pascalCase" }]
     },
   },
   {
