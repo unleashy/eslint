@@ -3,6 +3,7 @@ import js from "@eslint/js";
 import ts from "typescript-eslint";
 import svelte from "eslint-plugin-svelte";
 import unicorn from "eslint-plugin-unicorn";
+import regexp from "eslint-plugin-regexp";
 import prettier from "eslint-config-prettier";
 
 export default (tsconfigRootDir) => ts.config(
@@ -10,6 +11,7 @@ export default (tsconfigRootDir) => ts.config(
   ...ts.configs.recommendedTypeChecked,
   ...ts.configs.strictTypeChecked,
   unicorn.configs["flat/recommended"],
+  regexp.configs["flat/recommended"],
   ...svelte.configs["flat/recommended"],
   prettier,
   ...svelte.configs["flat/prettier"],
