@@ -84,7 +84,7 @@ export const node = (tsconfigRootDir) => [
 ];
 
 export const svelte = (tsconfigRootDir) => {
-  const { default: sveltePlugin } = import("eslint-plugin-svelte");
+  const { default: sveltePlugin } = await import("eslint-plugin-svelte");
   return [
     ...base,
     ...sveltePlugin.configs["flat/recommended"],
