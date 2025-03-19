@@ -5,7 +5,7 @@ import unicorn from "eslint-plugin-unicorn";
 import regexp from "eslint-plugin-regexp";
 import prettier from "eslint-config-prettier";
 
-const base = [
+export const base = [
   js.configs.recommended,
   ...ts.configs.recommendedTypeChecked,
   ...ts.configs.strictTypeChecked,
@@ -14,7 +14,7 @@ const base = [
   prettier,
 ];
 
-const languageOptions = ({ globals = {}, extraFileExtensions = [] } = {}) => ({
+export const languageOptions = ({ globals = {}, extraFileExtensions = [] } = {}) => ({
   sourceType: "module",
   ecmaVersion: "latest",
   globals,
@@ -25,7 +25,7 @@ const languageOptions = ({ globals = {}, extraFileExtensions = [] } = {}) => ({
   },
 });
 
-const rules = {
+export const rules = {
   "@typescript-eslint/array-type": ["error", { default: "array-simple" }],
   "@typescript-eslint/consistent-type-imports": [
     "error",
@@ -66,7 +66,7 @@ const rules = {
   "unicorn/prevent-abbreviations": "off",
 };
 
-const exclusions = [
+export const exclusions = [
   {
     files: ["**/*.js", "**/*.cjs", "**/*.mjs"],
     ...ts.configs.disableTypeChecked,
@@ -75,42 +75,3 @@ const exclusions = [
     ignores: ["build/", ".svelte-kit/", "dist/", ".yarn/", "node_modules/"],
   },
 ];
-
-export const node = (tsconfigRootDir) => [
-  ...base,
-  languageOptions({ globals: globals.node }),
-  { rules },
-  ...exclusions,
-];
-
-export const svelte = (tsconfigRootDir) => {
-  const { default: sveltePlugin } = await import("eslint-plugin-svelte");
-  return [
-    ...base,
-    ...sveltePlugin.configs["flat/recommended"],
-    ...sveltePlugin.configs["flat/prettier"],
-    languageOptions({
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
-      extraFileExtensions: [".svelte"],
-    }),
-    { rules },
-    {
-      files: ["**/*.svelte"],
-      languageOptions: {
-        parserOptions: {
-          parser: ts.parser,
-        },
-      },
-      rules: {
-        "@typescript-eslint/no-unsafe-assignment": "off",
-        "@typescript-eslint/no-unsafe-call": "off",
-        "no-undef": "off",
-        "unicorn/filename-case": "off",
-      },
-    },
-    ...exclusions,
-  ];
-}

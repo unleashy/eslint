@@ -2,7 +2,10 @@
   "name": "@unleashy/eslint",
   "version": "1.0.0",
   "type": "module",
-  "exports": "./src/index.js",
+  "exports": {
+    "./node": "./src/node.js",
+    "./svelte": "./src/svelte.js"
+  },
   "files": [
     "src"
   ],
