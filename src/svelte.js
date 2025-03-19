@@ -1,3 +1,4 @@
+import globals from "globals";
 import svelte from "eslint-plugin-svelte";
 import { base, languageOptions, rules, exclusions } from "./building-blocks.js";
 
@@ -10,9 +11,10 @@ export default (tsconfigRootDir) => [
       ...globals.browser,
       ...globals.node,
     },
+    tsconfigRootDir,
     extraFileExtensions: [".svelte"],
   }),
-  { rules },
+  rules,
   {
     files: ["**/*.svelte"],
     languageOptions: {

@@ -1,4 +1,3 @@
-import globals from "globals";
 import js from "@eslint/js";
 import ts from "typescript-eslint";
 import unicorn from "eslint-plugin-unicorn";
@@ -14,56 +13,64 @@ export const base = [
   prettier,
 ];
 
-export const languageOptions = ({ globals = {}, extraFileExtensions = [] } = {}) => ({
-  sourceType: "module",
-  ecmaVersion: "latest",
-  globals,
-  parserOptions: {
-    projectService: true,
-    tsconfigRootDir,
-    extraFileExtensions,
-  },
+export const languageOptions = ({
+  globals = {},
+  tsconfigRootDir,
+  extraFileExtensions = [],
+} = {}) => ({
+  languageOptions: {
+    sourceType: "module",
+    ecmaVersion: "latest",
+    globals,
+    parserOptions: {
+      projectService: true,
+      tsconfigRootDir,
+      extraFileExtensions,
+    },
+  }
 });
 
 export const rules = {
-  "@typescript-eslint/array-type": ["error", { default: "array-simple" }],
-  "@typescript-eslint/consistent-type-imports": [
-    "error",
-    { fixStyle: "inline-type-imports" },
-  ],
-  "@typescript-eslint/no-confusing-void-expression": "off",
-  "@typescript-eslint/no-extraneous-class": [
-    "error",
-    {
-      allowConstructorOnly: true,
-      allowEmpty: true,
-      allowWithDecorator: true,
-    },
-  ],
-  "@typescript-eslint/no-invalid-void-type": "off",
-  "@typescript-eslint/no-unnecessary-condition": [
-    "error",
-    { allowConstantLoopConditions: true },
-  ],
-  "@typescript-eslint/no-unused-vars": "off",
-  "@typescript-eslint/restrict-template-expressions": [
-    "error",
-    {
-      allowBoolean: true,
-      allowNumber: true,
-    },
-  ],
-  eqeqeq: ["error", "always"],
-  "no-constant-condition": "off",
-  "no-empty": "off",
-  "no-useless-escape": "off",
-  "prefer-const": "off",
-  "unicorn/consistent-function-scoping": "off",
-  "unicorn/no-this-assignment": "off",
-  "unicorn/no-useless-undefined": "off",
-  "unicorn/prefer-spread": "off",
-  "unicorn/prefer-ternary": "off",
-  "unicorn/prevent-abbreviations": "off",
+  rules: {
+    "@typescript-eslint/array-type": ["error", { default: "array-simple" }],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      { fixStyle: "inline-type-imports" },
+    ],
+    "@typescript-eslint/no-confusing-void-expression": "off",
+    "@typescript-eslint/no-extraneous-class": [
+      "error",
+      {
+        allowConstructorOnly: true,
+        allowEmpty: true,
+        allowWithDecorator: true,
+      },
+    ],
+    "@typescript-eslint/no-invalid-void-type": "off",
+    "@typescript-eslint/no-unnecessary-condition": [
+      "error",
+      { allowConstantLoopConditions: true },
+    ],
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/restrict-template-expressions": [
+      "error",
+      {
+        allowBoolean: true,
+        allowNumber: true,
+      },
+    ],
+    eqeqeq: ["error", "always"],
+    "no-constant-condition": "off",
+    "no-empty": "off",
+    "no-useless-escape": "off",
+    "prefer-const": "off",
+    "unicorn/consistent-function-scoping": "off",
+    "unicorn/no-this-assignment": "off",
+    "unicorn/no-useless-undefined": "off",
+    "unicorn/prefer-spread": "off",
+    "unicorn/prefer-ternary": "off",
+    "unicorn/prevent-abbreviations": "off",
+  }
 };
 
 export const exclusions = [
@@ -72,6 +79,13 @@ export const exclusions = [
     ...ts.configs.disableTypeChecked,
   },
   {
-    ignores: ["build/", ".svelte-kit/", "dist/", ".yarn/", "node_modules/"],
+    ignores: [
+      "build/",
+      ".svelte-kit/",
+      "dist/",
+      ".yarn/",
+      "node_modules/",
+      ".pnp.*",
+    ],
   },
 ];
