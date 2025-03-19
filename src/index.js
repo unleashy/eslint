@@ -1,7 +1,6 @@
 import globals from "globals";
 import js from "@eslint/js";
 import ts from "typescript-eslint";
-import sveltePlugin from "eslint-plugin-svelte";
 import unicorn from "eslint-plugin-unicorn";
 import regexp from "eslint-plugin-regexp";
 import prettier from "eslint-config-prettier";
@@ -84,31 +83,34 @@ export const node = (tsconfigRootDir) => [
   ...exclusions,
 ];
 
-export const svelte = (tsconfigRootDir) => [
-  ...base,
-  ...sveltePlugin.configs["flat/recommended"],
-  ...sveltePlugin.configs["flat/prettier"],
-  languageOptions({
-    globals: {
-      ...globals.browser,
-      ...globals.node,
-    },
-    extraFileExtensions: [".svelte"],
-  }),
-  { rules },
-  {
-    files: ["**/*.svelte"],
-    languageOptions: {
-      parserOptions: {
-        parser: ts.parser,
+export const svelte = (tsconfigRootDir) => {
+  const { default: sveltePlugin } = import("eslint-plugin-svelte");
+  return [
+    ...base,
+    ...sveltePlugin.configs["flat/recommended"],
+    ...sveltePlugin.configs["flat/prettier"],
+    languageOptions({
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+      extraFileExtensions: [".svelte"],
+    }),
+    { rules },
+    {
+      files: ["**/*.svelte"],
+      languageOptions: {
+        parserOptions: {
+          parser: ts.parser,
+        },
+      },
+      rules: {
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "no-undef": "off",
+        "unicorn/filename-case": "off",
       },
     },
-    rules: {
-      "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-call": "off",
-      "no-undef": "off",
-      "unicorn/filename-case": "off",
-    },
-  },
-  ...exclusions,
-];
+    ...exclusions,
+  ];
+}
