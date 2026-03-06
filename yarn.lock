@@ -59,6 +59,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@eslint/compat@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@eslint/compat@npm:2.0.2"
+  dependencies:
+    "@eslint/core": "npm:^1.1.0"
+  peerDependencies:
+    eslint: ^8.40 || 9 || 10
+  peerDependenciesMeta:
+    eslint:
+      optional: true
+  checksum: 10c0/176df611bcb54ff7d9c3ac440df6844e552a4ed5de30eba28edbeebb68ccc7f19111fdd4c10780101ee5f871bd03ec0457f38c67834c285751c2bdb37d8ae73c
+  languageName: node
+  linkType: hard
+
 "@eslint/config-array@npm:^0.23.2":
   version: 0.23.2
   resolution: "@eslint/config-array@npm:0.23.2"
@@ -329,6 +343,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@unleashy/eslint@workspace:."
   dependencies:
+    "@eslint/compat": "npm:^2.0.2"
     "@eslint/js": "npm:^10.0.1"
     eslint: "npm:^10.0.2"
     eslint-config-prettier: "npm:^10.1.8"

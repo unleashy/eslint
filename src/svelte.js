@@ -1,10 +1,11 @@
+import path from "node:path";
 import globals from "globals";
 import svelte from "eslint-plugin-svelte";
 import ts from "typescript-eslint";
 import { base, languageOptions, rules, exclusions } from "./building-blocks.js";
 
-export default (tsconfigRootDir) => [
-  ...base,
+export default async (tsconfigRootDir) => [
+  ...base(tsconfigRootDir),
   ...svelte.configs["flat/recommended"],
   ...svelte.configs["flat/prettier"],
   languageOptions({
@@ -17,10 +18,15 @@ export default (tsconfigRootDir) => [
   }),
   rules,
   {
-    files: ["**/*.svelte"],
+    files: ["**/*.svelte", "**/*.svelte.ts", "**/*.svelte.js"],
     languageOptions: {
       parserOptions: {
         parser: ts.parser,
+        svelteConfig: (
+          await import(
+            "file://" + path.resolve(tsconfigRootDir, "svelte.config.js")
+          )
+        ).default,
       },
     },
     rules: {

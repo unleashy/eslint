@@ -1,10 +1,13 @@
+import path from "node:path";
 import js from "@eslint/js";
+import { includeIgnoreFile } from "@eslint/compat";
 import ts from "typescript-eslint";
 import unicorn from "eslint-plugin-unicorn";
 import regexp from "eslint-plugin-regexp";
 import prettier from "eslint-config-prettier";
 
-export const base = [
+export const base = (root) => [
+  includeIgnoreFile(path.resolve(root, ".gitignore")),
   js.configs.recommended,
   ...ts.configs.recommendedTypeChecked,
   ...ts.configs.strictTypeChecked,
@@ -78,15 +81,5 @@ export const exclusions = [
   {
     files: ["**/*.js", "**/*.cjs", "**/*.mjs"],
     ...ts.configs.disableTypeChecked,
-  },
-  {
-    ignores: [
-      "build/",
-      ".svelte-kit/",
-      "dist/",
-      ".yarn/",
-      "node_modules/",
-      ".pnp.*",
-    ],
-  },
+  }
 ];
