@@ -1,6 +1,6 @@
 import path from "node:path";
 import js from "@eslint/js";
-import { includeIgnoreFile } from "@eslint/compat";
+import { includeIgnoreFile } from "eslint/config";
 import ts from "typescript-eslint";
 import unicorn from "eslint-plugin-unicorn";
 import regexp from "eslint-plugin-regexp";
